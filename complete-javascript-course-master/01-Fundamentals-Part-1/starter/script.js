@@ -295,7 +295,6 @@ if (23 > 10) {
 
 const me = 'jonas';
 console.log(`I'm ${me}`);
-*/
 
 const age = 23;
 
@@ -312,3 +311,19 @@ if (age >= 18) {
 }
 
 console.log(`I like to drink ${age >= 18 ? 'wine' : 'water'}`)
+*/
+const bill = 50;
+const tip = bill >= 50 && bill <= 200 ? bill * 0.15 : bill * 0.2;
+
+console.log(
+`
+--  Payment Check  --      
+
+Amount due: $${bill}
+Tip: $${tip}
+
+Total: $${bill+tip}
+
+--  Thank you  --
+`
+);
