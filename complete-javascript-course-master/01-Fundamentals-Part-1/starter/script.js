@@ -243,23 +243,23 @@ if (scoreDolphins > scoreKoalas) {
 } else {
     console.log("Koalas win the trophy");
 }
-*/
 
 const day = "tuesday";
 
+// switch operator
 switch (day) {
-  case "monday": // day === 'monday'
+    case "monday": // day === 'monday'
     console.log("Plan course structure");
     console.log("Go to codind meetup");
     break;
-  case "tuesday":
-    console.log("Prepare videos");
+    case "tuesday":
+        console.log("Prepare videos");
     break;
-  case "wednesday":
+    case "wednesday":
   case "thursday":
     console.log("write code examples");
     break;
-  case "friday":
+    case "friday":
     console.log("record videos");
     break;
   case "saturday":
@@ -270,14 +270,45 @@ switch (day) {
     console.log("not a valid day");
 }
 
+// if else statement
 if (day === 'monday') {
-
+    
 } else if (day === 'tuesday') {
-
+    
 } else if (day === 'wednesday' || day === 'thursday') {
     
 } else if (day === 'friday') {
-
+    
 } else if (day === 'saturday' || day === 'sunday') {
 
 }
+
+//statements and expressions
+
+3 + 4;
+1991;
+true && false && !false;
+
+if (23 > 10) {
+  const str = "23 is bigger";
+}
+
+const me = 'jonas';
+console.log(`I'm ${me}`);
+*/
+
+const age = 23;
+
+age >= 18 ? console.log('Wine!') : console.log('Water');
+
+const drink = age >= 18 ? 'wine' : 'water';
+console.log(drink)
+
+let drink2;
+if (age >= 18) {
+    dink2 = 'wine';
+} else {
+    drink2 = 'Water';
+}
+
+console.log(`I like to drink ${age >= 18 ? 'wine' : 'water'}`)
