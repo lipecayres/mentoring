@@ -201,5 +201,146 @@ bills.forEach((bill) => {
 console.log(tip)
 console.log(totals)
 
+
+// objects essential
+
+const jonasArray = [
+  "jonas",
+  "silva",
+  2037 - 1991,
+  "teacher",
+  ["Michael", "Peter", "Steven"],
+];
+
+const jonas = {
+  firstName: "Jonas",
+  lastName: "Silva",
+  birthday: 2037 - 1991,
+  job: "teacher",
+  friends: ["Michael", "Peter", "Steven"],
+};
+
+
+//objects part 2
+
+const jonas = {
+  firstName: "Jonas",
+  lastName: "Silva",
+  birthday: 2037 - 1991,
+  job: "teacher",
+  friends: ["Michael", "Peter", "Steven"],
+};
+
+console.log(jonas);
+
+console.log(jonas.lastName);
+console.log(jonas["lastName"]);
+
+const nameeKey = "Name";
+console.log(jonas["first" + nameeKey]);
+console.log(jonas["last" + nameeKey]);
+
+// console.log(jonas.last + nameeKey);
+
+const interestedIn = prompt("What do you know about jonas?");
+
+if (jonas[interestedIn]) {
+  console.log(jonas[interestedIn]);
+} else {
+  console.log("Wrong request, try it again.");
+}
+
+jonas.location = "Portugal";
+jonas['twitter'] = '@jonas';
+console.log(jonas);
+
+console.log(`${jonas.firstName} has ${jonas.friends.length} friends, and his best friend is called ${jonas.friends[0]}`);
+
+
+const jonas = {
+  firstName: "Jonas",
+  lastName: "Silva",
+  birthYear: 1991,
+  job: "teacher",
+  friends: ["Michael", "Peter", "Steven"],
+  hasDriverLicense: true,
+  
+  //  calcAge: function (birthYear) {
+    //    return 2037 - birthYear;
+  //  },
+  
+  //  calcAge: function () {
+    //    return 2037 - this.birthYear;
+    //  },
+    
+    calcAge: function () {
+    this.age = 2037 - this.birthYear;
+    return this.age;
+  },
+  getSummary: function () {
+    return `${this.firstName} is a ${this.age}-year old ${
+      this.job
+    }, and he has ${this.hasDriverLicense ? "a" : "no"} driver's licence`;
+  },
+};
+
+console.log(jonas.calcAge());
+
+console.log(jonas.age);
+console.log(jonas.age);
+console.log(jonas.getSummary());
+
+// console.log(jonas['calcAge']);
+
+// CHALLENGE 3
+
+const Mark = {
+  fullName: "Mark Smith",
+  mass: 78,
+  height: 1.69,
+  calcBMI: function () {
+    this.bmi = this.mass / this.height ** 2;
+    return this.bmi;
+  },
+};
+
+const John = {
+  fullName: "John Smith",
+  mass: 92,
+  height: 1.95,
+  calcBMI: function () {
+    this.bmi = this.mass / this.height ** 2;
+    return this.bmi;
+  },
+};
+
+if (Mark.bmi > John.bmi) {
+  console.log(
+    `${Mark.fullName} BMI (${Mark.calcBMI()}) is higher than ${
+      John.fullName
+    } BMI (${John.bmi})`
+  );
+} else {
+  console.log(
+`${John.fullName} BMI (${John.calcBMI()}) is higher than ${
+      Mark.fullName
+    } BMI (${Mark.calcBMI()})`
+  );
+}
+
+// FOR LOOP
+
+
+// console.log("Lifting weights repetition 1");
+// console.log("Lifting weights repetition 2");
+// console.log("Lifting weights repetition 3");
+// console.log("Lifting weights repetition 4");
+
+for (let i = 0; i < 10; i++) {
+  console.log("Lifting weights repetition " + (i+1));
+}
+
 */
 
+
+// looping arrays
