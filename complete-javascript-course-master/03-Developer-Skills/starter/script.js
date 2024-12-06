@@ -64,4 +64,64 @@ const calcTempAmplitudeNew = (t1,t2) => {
   
   let amplitudeNew = calcTempAmplitudeNew(temperatures,temperatures);
   console.log(amplitudeNew);
+  
+  const measureKelvin = function () {
+    const measurement = {
+      type:'temp',
+      unit: 'celsius',
+      //value: Number(prompt('Degrees celsius:'))
+      value:10
+    }
+    
+    const kelvin = measurement.value + 273;
+    return kelvin
+  }
+  console.log(measureKelvin());
+
+  const calcTempAmplitudeBug = (t1,t2) => {
+    
+    let arr = t1.concat(t2);
+    console.log(arr)
+    let min = 0,
+    max = 0;
+    arr.forEach((el) => {
+        if (Number(el)) {
+            if (el < min) min = el;
+          if (el > max) max = el;
+        }
+    });
+    return max - min;
+  };
+  
+  let amplitudeBug = calcTempAmplitudeBug(temperatures,temperatures);
+  console.log(amplitudeBug);
   */
+
+  //CHALLENGE 1 - lesson 62
+
+  /*
+Given an array of forecasted maximum temperatures, the thermometer displays a string with these temperatures.
+
+Example: [17, 21, 23] will print "... 17ºC in 1 days ... 21ºC in 2 days ... 23ºC in 3 days ..."
+
+Create a function 'printForecast' which takes in an array 'arr' and logs a string like the above to the console.
+
+Use the problem-solving framework: Understand the problem and break it up into sub-problems!
+
+TEST DATA 1: [17, 21, 23]
+TEST DATA 2: [12, 5, -5, 0, 4]
+*/
+
+const testData1 = [17, 21, 23];
+const testData2 = [12, 5, -5, 0, 4];
+
+const printForecast = (arr) => {
+  let stringFinal = ``;
+  for(let i=0, n = arr.length; i< n; i++) {
+    stringFinal += `... ${arr[i]} ºC in ${i+1} days `
+  };
+  return stringFinal;
+}
+
+console.log(printForecast(testData1));
+console.log(printForecast(testData1));
