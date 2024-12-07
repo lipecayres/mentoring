@@ -23,7 +23,7 @@ let numberToBeGuessed = Math.trunc(Math.random() * 20 + 1);
 
 checkButton.addEventListener('click', checkNumber);
 againButton.addEventListener('click', playAgain);
-input.addEventListener('keypress', function (e) {
+input.addEventListener('keypress', e => {
   if (e.keyCode === 13) {
     checkNumber();
   }
