@@ -1,5 +1,7 @@
 'use strict';
 
+const body = document.body;
+const numberMessage = document.querySelector('.number');
 const scoreMessage = document.querySelector('.score');
 const highscoreMessage = document.querySelector('.highscore');
 const message = document.querySelector('.message');
@@ -18,49 +20,69 @@ let numberToBeGuessed = Math.trunc(Math.random() * 20 + 1);
 console.log(numberToBeGuessed)
 
 checkButton.addEventListener('click', checkNumber);
-againButton.addEventListener('click', playAgain)
+againButton.addEventListener('click', playAgain);
+
 /*
     Functions 
  */
 
 // check if number is right, greater or smaller.
 function checkNumber() {
-    let x = Number(input.value);
+  let x = Number(input.value);
 
-  // check out of range
+  // no number
+  if (x == 0) return (message.innerHTML = `Choose between 1 to 20`);
+
+  // number out of range
   if (x < 1 || x > 20) {
-      message.innerHTML = `Out of range, try again.`;
-      return;
-    }
+    message.innerHTML = `Out of range, try again.`;
+    input.value = '';
+    return;
+  }
 
   // check number and range
   if (x > numberToBeGuessed) {
     message.innerHTML = `Too high!!`;
     updateScore();
   } else if (x < numberToBeGuessed) {
-      message.innerHTML = `Too low!!`;
+    message.innerHTML = `Too low!!`;
     updateScore();
-} else {
+  } else {
     message.innerHTML = `You are correct!!`;
-    updateHighscore()
-}
+    updateHighscore();
+    body.style.backgroundColor = 'green';
+    numberMessage.innerHTML = numberToBeGuessed;
+  }
+
+   // no more attempts
+   if (attempts < 1) {
+    body.style.backgroundColor = 'red';
+    numberMessage.innerHTML = numberToBeGuessed;
+    scoreMessage.innerHTML = 0;
+    return (message.innerHTML = `You loose.`);
+  }
+
 }
 
+// reset function - play again
 function playAgain() {
-    input.value = '';
-    attempts = 20;
-    scoreMessage.innerHTML = attempts;
-    message.innerHTML = `Start guessing...`;
-    numberToBeGuessed = Math.trunc(Math.random() * 20 + 1);
-    console.log(numberToBeGuessed)
+  numberToBeGuessed = Math.trunc(Math.random() * 20 + 1);
+  attempts = 20;
+  body.style.backgroundColor = '#222';
+  input.value = '';
+  scoreMessage.innerHTML = attempts;
+  message.innerHTML = `Start guessing...`;
+  numberMessage.innerHTML = `?`;
+  console.log(numberToBeGuessed)
 }
 
 //update score on the screen
 function updateScore() {
-    attempts--;
-    scoreMessage.innerHTML = attempts;
+  attempts--;
+  scoreMessage.innerHTML = attempts;
 }
 
+//update highscore on the screen
 function updateHighscore() {
   if (attempts > highscore) {
     highscore = attempts;
