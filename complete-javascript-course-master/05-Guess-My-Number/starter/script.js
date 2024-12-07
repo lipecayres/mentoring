@@ -2,6 +2,7 @@
 
 const body = document.body;
 const numberMessage = document.querySelector('.number');
+const pastNumberMessage = document.querySelector('.past-numbers');
 const scoreMessage = document.querySelector('.score');
 const highscoreMessage = document.querySelector('.highscore');
 const message = document.querySelector('.message');
@@ -9,7 +10,9 @@ const input = document.querySelector('.guess');
 const againButton = document.querySelector('.again');
 const checkButton = document.querySelector('.check');
 
-// display scores on screen
+// innitial display screen
+input.focus();
+let pastNumbers = '';
 let attempts = 20;
 let highscore = 0;
 scoreMessage.innerHTML = attempts;
@@ -17,10 +20,14 @@ highscoreMessage.innerHTML = highscore;
 
 // Secret number to be guessed - 1 to 20
 let numberToBeGuessed = Math.trunc(Math.random() * 20 + 1);
-console.log(numberToBeGuessed)
 
 checkButton.addEventListener('click', checkNumber);
 againButton.addEventListener('click', playAgain);
+input.addEventListener('keypress', function (e) {
+  if (e.keyCode === 13) {
+    checkNumber();
+  }
+});
 
 /*
     Functions 
@@ -54,32 +61,40 @@ function checkNumber() {
     numberMessage.innerHTML = numberToBeGuessed;
   }
 
-   // no more attempts
-   if (attempts < 1) {
+  // no more attempts
+  if (attempts < 1) {
     body.style.backgroundColor = 'red';
     numberMessage.innerHTML = numberToBeGuessed;
     scoreMessage.innerHTML = 0;
     return (message.innerHTML = `You loose.`);
   }
 
+  input.focus();
 }
 
 // reset function - play again
 function playAgain() {
   numberToBeGuessed = Math.trunc(Math.random() * 20 + 1);
   attempts = 20;
+  pastNumbers = '';
   body.style.backgroundColor = '#222';
   input.value = '';
   scoreMessage.innerHTML = attempts;
   message.innerHTML = `Start guessing...`;
   numberMessage.innerHTML = `?`;
-  console.log(numberToBeGuessed)
+  pastNumberMessage.innerHTML = pastNumbers;
+  input.focus();
 }
 
 //update score on the screen
 function updateScore() {
+  if (attempts <= 0) return;
   attempts--;
+  pastNumbers += String(input.value) + ' ';
+
   scoreMessage.innerHTML = attempts;
+  pastNumberMessage.innerHTML = pastNumbers;
+  input.value = '';
 }
 
 //update highscore on the screen
