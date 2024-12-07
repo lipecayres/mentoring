@@ -42,6 +42,7 @@ main {
 
 .right {
   width: 52rem;
+  min-height: 30rem;
   font-size: 2rem;
 }
 
@@ -114,6 +115,12 @@ h1 {
   height: 3rem;
 }
 
-.label-score {
+.label-score, .label-highscore {
   margin-bottom: 2rem;
+}
+
+.past-numbers { 
+  margin-top: 2rem;
+  max-width: 40rem;
+  line-height: 1.4;
 }
