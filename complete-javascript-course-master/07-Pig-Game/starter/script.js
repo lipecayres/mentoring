@@ -14,7 +14,7 @@ const btnNewGame = document.querySelector('.btn--new');
 const btnRollDice = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
 
-let scores, currentScore, playing, activePlayer;
+let scores, currentScore, playing, activePlayer, finalScore = 100;
 
 const init = function () {
   /* Variables */
@@ -22,7 +22,7 @@ const init = function () {
   currentScore = 0;
   activePlayer = 0;
   scores = [0, 0];
-
+  
   diceImageEl.classList.add('hidden');
 
   scores.forEach(e => {
@@ -83,7 +83,7 @@ function hold() {
     scores[activePlayer];
 
   // check final game
-  if (scores[activePlayer] >= 10) {
+  if (scores[activePlayer] >= finalScore) {
     document
       .querySelector(`.player--${activePlayer}`)
       .classList.add('player--winner');
