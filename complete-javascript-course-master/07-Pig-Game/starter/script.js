@@ -96,11 +96,9 @@ function newGame() {
   diceImageEl.classList.add('hidden');
   console.log(player1El);
 
-  if (player1El.classList.contains('player--winner')) {
-    player1El.classList.remove('player--winner');
-  } else if (player2El.classList.contains('player--winner')) {
-    player2El.classList.remove('player--winner');
-  }
+  player1El.classList.remove('player--winner');
+  player2El.classList.remove('player--winner');
+
   player1El.classList.add('player--active');
 }
 
