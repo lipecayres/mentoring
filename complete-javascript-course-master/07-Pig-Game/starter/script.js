@@ -1,5 +1,6 @@
 'use strict';
 /* Elements */
+
 const player1El = document.querySelector('.player--0');
 const player2El = document.querySelector('.player--1');
 const totalScorePlayer1El = document.getElementById('score--0');
@@ -19,78 +20,69 @@ btnRollDice.addEventListener('click', rollDice);
 btnHold.addEventListener('click', hold);
 
 /* Variables */
-let totalScoreP1 = 0,
-  totalScoreP2 = 0,
-  currentScoreP1 = 0,
-  currentScoreP2 = 0,
-  diceNumber = 0;
+let currentScore = 0;
+let activePlayer = 0;
+const scores = [0, 0];
+
+let diceNumber = 0;
+diceImageEl.classList.add('hidden');
+totalScorePlayer1El.textContent = 0;
+totalScorePlayer2El.textContent = 0;
 
 // Roll dice
 function rollDice() {
   diceNumber = Math.trunc(Math.random() * 6) + 1;
 
-  diceImageEl.src = `dice-${diceNumber}.png`
-  diceImageEl.classList.remove('hidden')
+  diceImageEl.src = `dice-${diceNumber}.png`;
+  diceImageEl.classList.remove('hidden');
   console.log(diceNumber);
 
-  // Player 1 turn
-  if (player1El.classList.contains('player--active')) {
-    if (diceNumber == 1) {
-      player2Active();
-    } else {
-      currentScoreP1 += diceNumber;
-      currentScorePlayer1El.textContent = currentScoreP1;
-    }
+  if (diceNumber !== 1) {
+    currentScore += diceNumber;
+
+    document.getElementById(`current--${activePlayer}`).textContent =
+      currentScore;
   } else {
-    // Player 2 turn
-    if (diceNumber == 1) {
-      player1Active();
-    } else {
-      currentScoreP2 += diceNumber;
-      currentScorePlayer2El.textContent = currentScoreP2;
-    }
+    currentScore = 0;
+
+    document.getElementById(`current--${activePlayer}`).textContent =
+      currentScore;
+
+    switchPlayer();
   }
 }
 
 function hold() {
-  player1El.classList.contains('player--active')
-    ? player2Active()
-    : player1Active();
+  scores[activePlayer] += currentScore;
+  currentScore = 0;
+  document.getElementById(`current--${activePlayer}`).textContent =
+    currentScore;
+
+  document.getElementById(`score--${activePlayer}`).textContent =
+    scores[activePlayer];
+
+  switchPlayer();
 }
 
 function newGame() {
-  totalScoreP1 =
-    totalScoreP2 =
-    currentScoreP1 =
-    currentScoreP2 =
-    diceNumber =
-      0;
+  scores.forEach(e => {
+    scores[e] = 0;
+  });
+
   totalScorePlayer1El.textContent = 0;
   totalScorePlayer2El.textContent = 0;
   currentScorePlayer1El.textContent = 0;
   currentScorePlayer2El.textContent = 0;
+
   diceImageEl.classList.add('hidden');
-  player1Active();
+  player1El.classList.remove('player--active');
+  player2El.classList.remove('player--active');
+  player1El.classList.add('player--active');
 }
 
-function player1Active() {
-  totalScoreP2 += currentScoreP2;
-  currentScoreP2 = 0;
-
-  totalScorePlayer2El.textContent = totalScoreP2;
-  currentScorePlayer2El.textContent = currentScoreP2;
+function switchPlayer() {
+  activePlayer = activePlayer === 0 ? 1 : 0;
 
   player1El.classList.toggle('player--active');
-  player2El.classList.remove('player--active');
-}
-
-function player2Active() {
-  totalScoreP1 += currentScoreP1;
-  currentScoreP1 = 0;
-
-  totalScorePlayer1El.textContent = totalScoreP1;
-  currentScorePlayer1El.textContent = currentScoreP1;
-
-  player2El.classList.add('player--active');
-  player1El.classList.remove('player--active');
+  player2El.classList.toggle('player--active');
 }
