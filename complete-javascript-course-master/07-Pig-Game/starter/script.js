@@ -75,6 +75,7 @@ function hold() {
       .querySelector(`.player--${activePlayer}`)
       .classList.remove('player--active');
 
+
     playing = false;
   } else {
     switchPlayer();
@@ -86,6 +87,7 @@ function newGame() {
     scores[e] = 0;
   });
 
+  playing = true;
   totalScorePlayer1El.textContent = scores[0];
   totalScorePlayer2El.textContent = scores[1];
   currentScorePlayer1El.textContent = 0;
@@ -95,7 +97,7 @@ function newGame() {
   console.log(player1El);
 
   if (player1El.classList.contains('player--winner')) {
-    player1El.classList.remove('player-winner');
+    player1El.classList.remove('player--winner');
   } else if (player2El.classList.contains('player--winner')) {
     player2El.classList.remove('player--winner');
   }
