@@ -75,7 +75,7 @@ function hold() {
       .querySelector(`.player--${activePlayer}`)
       .classList.remove('player--active');
 
-
+    diceImageEl.classList.add('hidden');
     playing = false;
   } else {
     switchPlayer();
