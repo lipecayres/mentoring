@@ -14,15 +14,16 @@ const btnNewGame = document.querySelector('.btn--new');
 const btnRollDice = document.querySelector('.btn--roll');
 const btnHold = document.querySelector('.btn--hold');
 
-/* Buttons */
-btnNewGame.addEventListener('click', newGame);
-btnRollDice.addEventListener('click', rollDice);
-btnHold.addEventListener('click', hold);
-
 /* Variables */
+let playing = true;
 let currentScore = 0;
 let activePlayer = 0;
 const scores = [0, 0];
+
+/* Action to buttons */
+btnNewGame.addEventListener('click', newGame);
+btnRollDice.addEventListener('click', rollDice);
+btnHold.addEventListener('click', hold);
 
 let diceNumber = 0;
 diceImageEl.classList.add('hidden');
@@ -31,6 +32,8 @@ totalScorePlayer2El.textContent = 0;
 
 // Roll dice
 function rollDice() {
+  if (!playing) return;
+
   diceNumber = Math.trunc(Math.random() * 6) + 1;
 
   diceImageEl.src = `dice-${diceNumber}.png`;
@@ -53,6 +56,8 @@ function rollDice() {
 }
 
 function hold() {
+  if (!playing) return;
+
   scores[activePlayer] += currentScore;
   currentScore = 0;
   document.getElementById(`current--${activePlayer}`).textContent =
@@ -61,7 +66,19 @@ function hold() {
   document.getElementById(`score--${activePlayer}`).textContent =
     scores[activePlayer];
 
-  switchPlayer();
+  // check final game
+  if (scores[activePlayer] >= 10) {
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.add('player--winner');
+    document
+      .querySelector(`.player--${activePlayer}`)
+      .classList.remove('player--active');
+
+    playing = false;
+  } else {
+    switchPlayer();
+  }
 }
 
 function newGame() {
@@ -69,14 +86,19 @@ function newGame() {
     scores[e] = 0;
   });
 
-  totalScorePlayer1El.textContent = 0;
-  totalScorePlayer2El.textContent = 0;
+  totalScorePlayer1El.textContent = scores[0];
+  totalScorePlayer2El.textContent = scores[1];
   currentScorePlayer1El.textContent = 0;
   currentScorePlayer2El.textContent = 0;
 
   diceImageEl.classList.add('hidden');
-  player1El.classList.remove('player--active');
-  player2El.classList.remove('player--active');
+  console.log(player1El);
+
+  if (player1El.classList.contains('player--winner')) {
+    player1El.classList.remove('player-winner');
+  } else if (player2El.classList.contains('player--winner')) {
+    player2El.classList.remove('player--winner');
+  }
   player1El.classList.add('player--active');
 }
 
