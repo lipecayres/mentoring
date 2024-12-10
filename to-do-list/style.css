@@ -1,0 +1,119 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap");
+
+:root {
+  --primary-color: #21386e;
+  --secondary-color: #ffcb05;
+  --third-color: #FF0000; /*FF0000 - open red color*/
+  --base-color:#FFF;
+}
+
+* {
+  box-sizing: border-box;
+  color: var(--primary-color);
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  background: url(https://i.pinimg.com/originals/69/68/1e/69681ef4639fa37d34c05f824a597cb3.jpg)
+    no-repeat fixed;
+  background-position: left 80%;
+}
+
+/*Container*/
+.container {
+  background-color: rgba(255, 255, 255, 0.7);
+  margin: 0.5rem;
+  padding: 1rem 2rem;
+}
+
+/*Header */
+header h1 {
+  color: var(--secondary-color);
+  text-shadow: var(--primary-color) 3px 2px 1px;
+  text-transform: uppercase;
+  font-size: 4rem;
+}
+
+/*input section*/
+.item-box h4 {
+  color: var(--primary-color);
+  text-transform: capitalize;
+  text-align: left;
+  margin: 0;
+}
+
+.add-item {
+  display: inline-block;
+  justify-content: space-between;
+}
+.add-item input {
+  width: 20rem;
+  height: 2rem;
+  border: 2px solid var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+/*item section*/
+.item {
+  display: flex;
+  margin: 0.2rem 0.2rem 0.5rem 0.2rem;
+}
+.title-spacing {
+  display: flex;
+  justify-content: space-around;
+  margin: auto;
+}
+
+.button-spacing {
+  display: inline-block;
+  justify-content: space-between;
+  margin: auto;
+}
+
+.item p {
+  width: 15rem;
+  text-align: left;
+  padding: 0.2rem;
+  margin: 0;
+}
+
+.active {
+  text-decoration: line-through;
+}
+
+/*buttons*/
+
+button {
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+  color: var(--base-color);
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+.edit,
+.delete {
+  height: 1.5rem;
+  width: 4rem;
+  border: 2px solid var(--primary-color);
+}
+
+.edit {
+    background-color: var(--secondary-color);
+    
+
+}
+
+.delete {
+    background-color:var(--third-color);
+}
