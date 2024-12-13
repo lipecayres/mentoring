@@ -174,33 +174,48 @@ const poll = {
   options: ['0: JavaScript', '1: Python', '2: Rust', '3: C++'],
   answers: new Array(4).fill(0),
   registerNewAnswer() {
-    const ans = prompt(`${this.question}\n${this.options.join('\n')}\n(Write option number)`);
+    let ans = Number(
+      prompt(
+        `${this.question}\n${this.options.join('\n')}\n(Write option number)`
+      )
+    );
 
+    typeof ans === 'number' && ans < this.answers.length && this.answers[ans]++;
+    this.displayResults();
+
+    /*
+    
     // Answer validation
     ans = ans.trim();
     if (ans == '') ans = -1;
     ans = Number(ans);
-
-    //
-    if (typeof ans == 'number' && ans >= 0 && ans < 4) {
-      this.answers[ans]++;
-      this.displayResults();
-    } else {
-      alert('Invalid number');
-    }
+    
+   if (typeof ans == 'number' && ans >= 0 && ans < this.answers.length) {
+    this.answers[ans]++;
+    this.displayResults();
+  } else {
+    alert('Invalid number');
+}
+*/
   },
 
-  displayResults(type) {
+  displayResults(type = 'array') {
     type = prompt('How to you want to see it? Array ot String?');
 
     if (type === 'string') {
-      console.log(`Poll results are ${this.answers[0]}, ${this.answers[1]}, ${this.answers[2]}, ${this.answers[3]}.`);
+      console.log(`Poll results are ${this.answers.join(', ')}.`);
     } else {
       console.log(this.answers);
     }
   },
 };
 
-document.querySelector('.poll').addEventListener('click', () => {
-  poll.registerNewAnswer();
-});
+document
+  .querySelector('.poll')
+  .addEventListener('click', poll.registerNewAnswer.bind(poll));
+
+//  BONUS TEST DATA 1: [5, 2, 3]
+//  BONUS TEST DATA 2: [1, 5, 3, 9, 6, 1]
+
+poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] });
+ 
