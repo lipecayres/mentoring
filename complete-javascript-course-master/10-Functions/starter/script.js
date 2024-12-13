@@ -167,7 +167,6 @@ BONUS TEST DATA 2: [1, 5, 3, 9, 6, 1]
 
 GOOD LUCK 😀
 
-*/
 
 const poll = {
   question: `What's your favourite programming language?`,
@@ -182,40 +181,55 @@ const poll = {
 
     typeof ans === 'number' && ans < this.answers.length && this.answers[ans]++;
     this.displayResults();
-
-    /*
+    
+    
+    // comment start here and end line 200
     
     // Answer validation
     ans = ans.trim();
     if (ans == '') ans = -1;
     ans = Number(ans);
     
-   if (typeof ans == 'number' && ans >= 0 && ans < this.answers.length) {
-    this.answers[ans]++;
-    this.displayResults();
-  } else {
-    alert('Invalid number');
-}
-*/
-  },
+    if (typeof ans == 'number' && ans >= 0 && ans < this.answers.length) {
+      this.answers[ans]++;
+      this.displayResults();
+    } else {
+      alert('Invalid number');
+  }
+  // end here
+},
 
-  displayResults(type = 'array') {
+displayResults(type = 'array') {
     type = prompt('How to you want to see it? Array ot String?');
-
+    
     if (type === 'string') {
       console.log(`Poll results are ${this.answers.join(', ')}.`);
     } else {
       console.log(this.answers);
-    }
-  },
+  }
+},
 };
 
 document
-  .querySelector('.poll')
-  .addEventListener('click', poll.registerNewAnswer.bind(poll));
+.querySelector('.poll')
+.addEventListener('click', poll.registerNewAnswer.bind(poll));
 
 //  BONUS TEST DATA 1: [5, 2, 3]
 //  BONUS TEST DATA 2: [1, 5, 3, 9, 6, 1]
 
 poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] });
- 
+
+*/
+
+const runOnce = function () {
+  console.log('Run once');
+};
+
+runOnce();
+
+(function () {
+  console.log('Run once');
+})();
+
+(() => console.log('Run once again'))() 
+  
