@@ -81,6 +81,12 @@ const displayMovements = function (movements) {
 
 displayMovements(account1.movements);
 
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `$${balance} CAD`;
+};
+calcDisplayBalance(account1.movements);
+
 const createUsernames = function (accounts) {
   accounts.forEach((acc, i) => {
     acc.username = acc.owner
@@ -270,5 +276,59 @@ deposits = movements.filter(e => e > 0);
 withdraw = movements.filter(e => e < 0);
 console.log(deposits)
 console.log(withdraw)
-*/
 
+// reduce method
+
+// accumulator -> snowball (put all together)
+const balance = movements.reduce(function (acc, cur, i, arr) {
+  console.log(`Iteraction ${i}: ${acc}`);
+  return acc + cur;
+}, 0);
+
+let balance2 = 0;
+for (const mov of movements) balance2 += mov;
+console.log(balance2)
+
+// max value 
+
+const max = movements.reduce((acc,mov) => acc > mov ? acc : mov)
+
+console.log(max)
+
+*/
+// CHALLENGE 2
+
+let julia = [9, 16, 6, 8, 3];
+let kate = [9, 16, 6, 8, 3];
+
+let julia2 = [4, 1, 15, 8, 3];
+let kate2 = [10, 5, 6, 1, 4];
+
+const adultAge = 3;
+
+const calcAverageHumanAge = function (arr) {
+  const humanAges = arr.map(age => (age <= 2 ? 2 * age : 4 * age + 16));
+  console.log(humanAges);
+
+  let adultDogs = humanAges.filter(age => age >= 18);
+  console.log(adultDogs);
+
+  let averageAdultAge = humanAges.reduce(
+    (acc, age, i, arr) => acc + age / arr.length,
+    0
+  );
+  console.log(averageAdultAge);
+  return averageAdultAge;
+};
+
+calcAverageHumanAge(julia);
+calcAverageHumanAge(kate2);
+
+const me = {
+  name: 'Felipe',
+  age: 30,
+  year: 1991,
+  calcAge() {
+    return 2024 - this.year;
+  },
+};
