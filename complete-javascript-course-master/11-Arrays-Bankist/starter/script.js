@@ -78,7 +78,19 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
+
 displayMovements(account1.movements);
+
+const createUsernames = function (accounts) {
+  accounts.forEach((acc, i) => {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(e => e[0])
+      .join('');
+  });
+};
+createUsernames(accounts);
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -91,7 +103,7 @@ const currencies = new Map([
 ]);
 */
 
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 /* 
@@ -200,7 +212,7 @@ TEST DATA 2: Julia's data [9, 16, 6, 8, 3], Kate's data [10, 5, 6, 1, 4]
 
 GOOD LUCK 😀
 
-*/
+
 
 let julia = [3, 5, 2, 12, 7];
 let kate = [9, 16, 6, 8, 3];
@@ -219,12 +231,44 @@ const checkdogs = function (dogsJulia, dogsKate) {
 
   totalDogs.forEach((age, i) => {
     let message =
-      age > adultAge
-        ? `is an adult, and is ${age} years old`
-        : 'is still a puppy';
+    age > adultAge
+    ? `is an adult, and is ${age} years old`
+    : 'is still a puppy';
     console.log(`Dog number ${i + 1} ${message}`);
   });
 };
 
 checkdogs(julia, kate);
 checkdogs(julia2, kate2);
+
+// map methods
+const eurToUsd = 1.1;
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+const movementsUSD = movements.map(e => e * eurToUsd);
+
+const movementsUSDfor = [];
+for (const e of movements) movementsUSDfor.push(e * eurToUsd);
+
+console.log(movements);
+console.log(movementsUSD);
+console.log(movementsUSDfor);
+
+const movementDescriptions = movements.map(
+  (mov, i) =>
+    `Movement ${i + 1}: You ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(
+  mov
+    )}`
+);
+console.log(movementDescriptions);
+
+
+// filter method 
+let deposits , withdraw
+deposits = movements.filter(e => e > 0);
+withdraw = movements.filter(e => e < 0);
+console.log(deposits)
+console.log(withdraw)
+*/
+
