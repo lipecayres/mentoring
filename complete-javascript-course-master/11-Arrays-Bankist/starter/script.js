@@ -61,6 +61,7 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+// Display account movements
 const displayMovements = function (movements) {
   containerMovements.innerHTML = '';
 
@@ -78,14 +79,39 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
-
 displayMovements(account1.movements);
 
+// Calculate and display balance
 const calcDisplayBalance = function (movements) {
   const balance = movements.reduce((acc, mov) => acc + mov, 0);
   labelBalance.textContent = `$${balance} CAD`;
 };
 calcDisplayBalance(account1.movements);
+
+//// Calculate and display summary
+const calcDisplaySummary = function (movements) {
+  const incomes = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, cur) => acc + cur);
+
+  const outcomes = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, cur) => acc + cur);
+
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(cur => cur * 0.012) //1.2% interest rate
+    .filter((int, i, arr) => {
+      console.log(arr);
+      return int > 5;
+    })
+    .reduce((acc, cur) => acc + cur);
+
+  labelSumIn.textContent = `$${incomes}`;
+  labelSumOut.textContent = `$${Math.abs(outcomes)}`;
+  labelSumInterest.textContent = `$${interest}`;
+};
+calcDisplaySummary(account1.movements);
 
 const createUsernames = function (accounts) {
   accounts.forEach((acc, i) => {
@@ -295,7 +321,6 @@ const max = movements.reduce((acc,mov) => acc > mov ? acc : mov)
 
 console.log(max)
 
-*/
 // CHALLENGE 2
 
 let julia = [9, 16, 6, 8, 3];
@@ -309,10 +334,10 @@ const adultAge = 3;
 const calcAverageHumanAge = function (arr) {
   const humanAges = arr.map(age => (age <= 2 ? 2 * age : 4 * age + 16));
   console.log(humanAges);
-
+  
   let adultDogs = humanAges.filter(age => age >= 18);
   console.log(adultDogs);
-
+  
   let averageAdultAge = humanAges.reduce(
     (acc, age, i, arr) => acc + age / arr.length,
     0
@@ -332,3 +357,30 @@ const me = {
     return 2024 - this.year;
   },
 };
+
+
+const eurToUsd = 1.1;
+
+const totalDepositsUSD = movements
+.filter(mov => mov > 0)
+.map(mov => mov * eurToUsd)
+.reduce((acc, cur) => acc + cur);
+
+console.log(totalDepositsUSD);
+
+// challenge 3
+
+const calcAverageHumanAge = function (arr) {
+  return arr
+    .map(age => (age <= 2 ? 2 * age : 4 * age + 16))
+    .filter(age => age >= 18)
+    .reduce((acc, age, i, arr) => acc + age / arr.length, 0);
+  };
+  
+  
+  let julia2 = [10,10,10];
+  console.log(calcAverageHumanAge(julia2))
+  */
+
+
+  
