@@ -79,39 +79,33 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
-displayMovements(account1.movements);
 
 // Calculate and display balance
 const calcDisplayBalance = function (movements) {
   const balance = movements.reduce((acc, mov) => acc + mov, 0);
   labelBalance.textContent = `$${balance} CAD`;
 };
-calcDisplayBalance(account1.movements);
 
 //// Calculate and display summary
-const calcDisplaySummary = function (movements) {
-  const incomes = movements
+const calcDisplaySummary = function (acc) {
+  const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, cur) => acc + cur);
 
-  const outcomes = movements
+  const outcomes = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, cur) => acc + cur);
 
-  const interest = movements
+  const interest = acc.movements
     .filter(mov => mov > 0)
-    .map(cur => cur * 0.012) //1.2% interest rate
-    .filter((int, i, arr) => {
-      console.log(arr);
-      return int > 5;
-    })
-    .reduce((acc, cur) => acc + cur);
+    .map(cur => (cur * acc.interestRate) / 100) //1.2% interest rate
+    .filter((int, i, arr) => int > 1)
+    .reduce((acc, cur) => acc + cur, 0);
 
   labelSumIn.textContent = `$${incomes}`;
   labelSumOut.textContent = `$${Math.abs(outcomes)}`;
   labelSumInterest.textContent = `$${interest}`;
 };
-calcDisplaySummary(account1.movements);
 
 const createUsernames = function (accounts) {
   accounts.forEach((acc, i) => {
@@ -123,6 +117,41 @@ const createUsernames = function (accounts) {
   });
 };
 createUsernames(accounts);
+
+let currentAccount;
+
+//Event handler
+btnLogin.addEventListener('click', e => {
+  // Prevent form to submitting
+  e.preventDefault();
+
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+  console.log(currentAccount);
+
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // Display UI and message
+    labelWelcome.textContent = `Welcome back, ${currentAccount.owner
+      .split(' ')
+      .at(0)}`;
+    containerApp.style.opacity = 100;
+
+    // Clear input fields
+    inputLoginPin.value = inputLoginUsername.value = '';
+    inputLoginPin.blur();
+    inputLoginUsername.blur();
+
+    //Display movements
+    displayMovements(currentAccount.movements);
+    // Display Balance
+    calcDisplayBalance(currentAccount.movements);
+    // Display Summary
+    calcDisplaySummary(currentAccount);
+
+    console.log('Login');
+  }
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -380,7 +409,16 @@ const calcAverageHumanAge = function (arr) {
   
   let julia2 = [10,10,10];
   console.log(calcAverageHumanAge(julia2))
-  */
-
-
   
+  // find method
+  
+  const firstWithdraw = movements.find(mov => mov < 0)
+  
+  console.log(movements)
+  console.log(firstWithdraw)
+  
+  
+  const account = accounts.find(acc => acc.owner === 'Jessica Davis')
+  console.log(account)
+  
+  */
