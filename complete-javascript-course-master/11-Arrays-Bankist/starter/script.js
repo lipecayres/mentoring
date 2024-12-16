@@ -70,8 +70,8 @@ const displayMovements = function (movements) {
     const html = `
         <div class="movements__row">
           <div class="movements__type movements__type--${transaction}">${
-            i + 1
-          } ${transaction}</div>
+      i + 1
+    } ${transaction}</div>
           <div class="movements__value">${mov}</div>
         </div>
     `;
@@ -173,6 +173,25 @@ btnTransfer.addEventListener('click', e => {
   } else {
     console.log('Not Valid');
   }
+});
+
+btnClose.addEventListener('click', e => {
+  e.preventDefault();
+
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    Number(inputClosePin.value) === currentAccount.pin
+  ) {
+    const indexAccount = accounts.findIndex(
+      acc => acc.username === currentAccount.username
+    );
+    // Delete account
+    accounts.splice(indexAccount, 1);
+
+    // Hide UI
+    containerApp.style.opacity = 0;
+  }
+  inputClosePin.value = inputCloseUsername.value = '';
 });
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
