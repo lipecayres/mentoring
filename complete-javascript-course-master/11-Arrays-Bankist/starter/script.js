@@ -137,7 +137,6 @@ btnLogin.addEventListener('click', e => {
   currentAccount = accounts.find(
     acc => acc.username === inputLoginUsername.value
   );
-  console.log(currentAccount);
 
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
     // Display UI and message
@@ -173,6 +172,21 @@ btnTransfer.addEventListener('click', e => {
   } else {
     console.log('Not Valid');
   }
+});
+
+btnLoan.addEventListener('click', e => {
+  e.preventDefault();
+
+  const amount = Number(inputLoanAmount.value);
+
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= 0.1 * amount)) {
+    // Add movement
+    currentAccount.movements.push(amount);
+  }
+  // Update UI
+  updateUI(currentAccount);
+
+  inputLoanAmount.value = '';
 });
 
 btnClose.addEventListener('click', e => {
@@ -461,14 +475,69 @@ const calcAverageHumanAge = function (arr) {
   const account = accounts.find(acc => acc.owner === 'Jessica Davis')
   console.log(account)
   
-  */
-// findLast and findLastIndex
-
-console.log(movements);
-const lastWithdrawal = movements.findLast(mov => mov < 0);
+  // findLast and findLastIndex
+  
+  console.log(movements);
+  const lastWithdrawal = movements.findLast(mov => mov < 0);
 console.log(lastWithdrawal);
 
 const latestLargeMovementIndex = movements.findLastIndex(mov => Math.abs(mov) > 2000);
 
 console.log(latestLargeMovementIndex);
 console.log(`Your lastest was ${movements.length - latestLargeMovementIndex}`)
+
+// some and every / includes
+
+// Equality
+console.log(movements.includes(-130));
+
+//Condition
+console.log(movements.some(mov => mov > 0));
+
+const anyDeposits = movements.some(mov => mov > 0);
+console.log(anyDeposits);
+
+// EVERY - all elements satisfies the condition
+console.log(account4.movements.every(mov => mov > 0));
+
+// Separate callback
+const deposit = mov => mov > 0;
+console.log(movements.some(deposit))
+console.log(movements.every(deposit))
+console.log(movements.filter(deposit))
+
+const arr = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr.flat());
+
+const arrDeep = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arrDeep.flat());
+console.log(arrDeep.flat(2));
+
+const accountsMovements = accounts.map(acc => acc.movements);
+console.log(accountsMovements);
+const allMovements = accountsMovements.flat();
+console.log(allMovements);
+
+const overallBalance = allMovements.reduce((acc, mov) => acc + mov, 0);
+console.log(overallBalance);
+
+// flat
+const the2overallBalance = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, mov) => acc + mov, 0);
+
+  console.log(the2overallBalance)
+  
+  // flatMap
+  
+  const the3overallBalance = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, mov) => acc + mov, 0);
+  
+  console.log(the3overallBalance)
+  */
+
+
+
+  
