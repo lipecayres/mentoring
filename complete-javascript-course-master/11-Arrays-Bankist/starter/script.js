@@ -574,45 +574,48 @@ HINT 2: Being within a range 10% above and below the recommended portion means: 
 GOOD LUCK 😀
 TEST DATA:
 
-
+*/
 const dogs = [
-  { weight: 22, currFood: 0, owners: ['Alice', 'Bob'] },
+  { weight: 22, currFood: 80, owners: ['Alice', 'Bob'] },
   { weight: 8, currFood: 200, owners: ['Matilda'] },
   { weight: 13, currFood: 275, owners: ['Sarah', 'John'] },
   { weight: 32, currFood: 340, owners: ['Michael'] },
 ];
+
+//1(
+dogs.forEach(
+  dog => (dog.recommendedFood = Math.floor(dog.weight ** 0.75 * 28))
+);
 console.log(dogs);
 
-//1
-dogs.forEach(dog => (dog.recommendedFood = dog.weight ** 0.75 * 28));
-
 //2
-let task2 = dogs.filter(dog => dog.owners.includes('Sarah'))[0];
+let task2 = dogs.find(dog => dog.owners.includes('Sarah'));
 let foodStatus;
 
-if (task2.currFood > 1.1 * task2.recommendedFood) {
-  foodStatus = `too much`;
-} else if (task2.currFood > 0.9 * task2.recommendedFood) {
-  foodStatus = `average`;
-} else {
-  foodStatus = `too low`;
-}
+const checkDogsPortion = dog => {
+  if (dog.currFood > 1.1 * task2.recommendedFood) {
+    return `too-much`;
+  } else if (dog.currFood > 0.9 * task2.recommendedFood) {
+    return `average`;
+  } else {
+    return `too-low`;
+  }
+};
 
-console.log(`Sarah's dog is eating ${foodStatus}`);
+console.log(`Sarah's dog is eating ${checkDogsPortion(task2)}`);
 
 //3
 
 const ownersEatTooMuch = dogs
-.filter(dog => dog.currFood > 1.1 * dog.recommendedFood)
-  .map(dog => dog.owners)
-  .flat();
-  console.log(ownersEatTooMuch);
+  .filter(dog => dog.currFood > 1.1 * dog.recommendedFood)
+  .flatMap(dog => dog.owners);
+console.log(ownersEatTooMuch);
 
-  const ownersEatTooLittle = dogs
+const ownersEatTooLittle = dogs
   .filter(dog => dog.currFood < 0.9 * dog.recommendedFood)
   .flatMap(dog => dog.owners);
-  console.log(ownersEatTooLittle);
-  
+console.log(ownersEatTooLittle);
+
 // 4
 
 console.log(`${ownersEatTooMuch.join(' and ')} are eating too much`);
@@ -620,31 +623,44 @@ console.log(`${ownersEatTooMuch.join(' and ')} are eating too much`);
 console.log(`${ownersEatTooLittle.join(' and ')} are eating too little`);
 
 //5
-console.log(dogs.some(dog => (dog.currFood = dog.recommendedFood)));
+console.log(dogs.some(dog => dog.currFood === dog.recommendedFood));
 
 //6
-console.log(
-  dogs.some(
-    dog =>
-      dog.currFood < 1.1 * dog.recommendedFood &&
-      dog.currFood > 0.9 * dog.recommendedFood
-  )
-);
+
+const dogsEatingOkay = dog =>
+  dog.currFood < 1.1 * dog.recommendedFood &&
+  dog.currFood > 0.9 * dog.recommendedFood;
+
+console.log(dogs.some(dogsEatingOkay));
 
 //7
-console.log(
-  dogs.filter(
-    dog =>
-      dog.currFood < 1.1 * dog.recommendedFood &&
-    dog.currFood > 0.9 * dog.recommendedFood
-  )
-);
+console.log(dogs.filter(dogsEatingOkay));
 
 // 8
-const dogsSortedByRecommendedFood = dogs.sort((a,b)  => a.recommendedFood - b.recommendedFood);
-console.log(dogsSortedByRecommendedFood)
+const dogsSortedByRecommendedFood = dogs.toSorted(
+  (a, b) => a.recommendedFood - b.recommendedFood
+);
+console.log(dogsSortedByRecommendedFood);
 
+// 9
 
+const dogsGroupedByPortion = Object.groupBy(dogs, dog => {
+  if (dog.currFood > 1.1 * task2.recommendedFood) {
+    return `too-much`;
+  } else if (dog.currFood > 0.9 * task2.recommendedFood) {
+    return `average`;
+  } else {
+    return `too-low`;
+  }
+});
+console.log(dogsGroupedByPortion);
+
+// 10
+
+const dogsGroupedByOwner = Object.groupBy(dogs, dog => `${dog.owners.length}-owners`)
+console.log(dogsGroupedByOwner);
+
+/*
 // Sort Method
 
 // Strings
