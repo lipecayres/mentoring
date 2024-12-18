@@ -8,6 +8,7 @@
 
 const container = document.querySelector(".container");
 const input = document.getElementById("user-input");
+const taskBox = document.querySelector(".item-box");
 
 /* buttons*/
 const addButton = document.querySelector(".add-item-button");
@@ -17,8 +18,6 @@ addButton.addEventListener("click", addToDo);
 
 /**add task function */
 function addToDo() {
-  const taskBox = document.querySelector(".item-box");
-
   let taskTitle = input.value.trim();
   if (taskTitle === "") return;
 
@@ -39,32 +38,23 @@ function addToDo() {
   input.value = "";
 }
 
-/**edit task button */
-function editToDo() {
-  const taskTitle = document.querySelectorAll(".item-title");
-  const editButton = document.querySelectorAll(".edit-button");
+// Event delegation for edit and delete buttons
+taskBox.addEventListener("click", (e) => {
+  if (e.target.classList.contains("edit-button")) {
+    const taskTitle = e.target.closest(".item").querySelector(".item-title");
+    const newTitle = prompt("Edit task title:", taskTitle.textContent);
+    if (newTitle) taskTitle.textContent = newTitle;
+  }
 
-  editButton.forEach((button) => {
-    button.addEventListener("click", (e) => {
-      const newTitle = prompt("Edit task title:");
+  if (e.target.classList.contains("delete-button")) {
+    e.target.closest(".item").remove();
+  }
 
-    // Attempt - didn't work
-    //  taskTitle.target.closest('.item-title').value = newTitle
-    
-    });
-  });
-}
-
-/**delete task button */
-function deleteToDo() {
-  const deleteButton = document.querySelectorAll(".delete-button");
-
-  deleteButton.forEach((button) => {
-    button.addEventListener("click", (e) => {
-      e.target.closest(".item").remove();
-    });
-  });
-}
+  if (e.target.classList.contains("checkbox")) {
+    const itemTitle = e.target.closest(".title-spacing").querySelector(".item-title");
+    itemTitle.classList.toggle("active");
+  }
+});
 
 /** checkbox function */
 function toggleCheck() {
@@ -72,10 +62,8 @@ function toggleCheck() {
 
   allCheckbox.forEach((checkbox) => {
     checkbox.addEventListener("click", (e) => {
-      
       // Attempt - didn't work
       // e.target.closest(".item-title").classList.add("active");
-      
     });
   });
 }
