@@ -62,10 +62,12 @@ const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
 // Display account movements
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = '';
 
-  movements.forEach((mov, i) => {
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach((mov, i) => {
     let transaction = mov > 0 ? 'deposit' : 'withdrawal';
     const html = `
         <div class="movements__row">
@@ -206,6 +208,13 @@ btnClose.addEventListener('click', e => {
     containerApp.style.opacity = 0;
   }
   inputClosePin.value = inputCloseUsername.value = '';
+});
+
+let sorted = false;
+btnSort.addEventListener('click', e => {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
 });
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -538,6 +547,117 @@ const the2overallBalance = accounts
   console.log(the3overallBalance)
   */
 
+///////////////////////////////////////
+// Coding Challenge #4
+
+/* 
+Julia and Kate are still studying dogs, and this time they are studying if dogs are eating too much or too little.
+Eating too much means the dog's current food portion is larger than the recommended portion, and eating too little is the opposite.
+Eating an okay amount means the dog's current food portion is within a range 10% above and 10% below the recommended portion (see hint).
+
+1. Loop over the array containing dog objects, and for each dog, calculate the recommended food portion and add it to the object as a new property. Do NOT create a new array, simply loop over the array. Forumla: recommendedFood = weight ** 0.75 * 28. (The result is in grams of food, and the weight needs to be in kg)
+2. Find Sarah's dog and log to the console whether it's eating too much or too little. HINT: Some dogs have multiple owners, so you first need to find Sarah in the owners array, and so this one is a bit tricky (on purpose) 🤓
+3. Create an array containing all owners of dogs who eat too much ('ownersEatTooMuch') and an array with all owners of dogs who eat too little ('ownersEatTooLittle').
+4. Log a string to the console for each array created in 3., like this: "Matilda and Alice and Bob's dogs eat too much!" and "Sarah and John and Michael's dogs eat too little!"
+5. Log to the console whether there is any dog eating EXACTLY the amount of food that is recommended (just true or false)
+6. Log to the console whether there is any dog eating an OKAY amount of food (just true or false)
+7. Create an array containing the dogs that are eating an OKAY amount of food (try to reuse the condition used in 6.)
+8. Create a shallow copy of the dogs array and sort it by recommended food portion in an ascending order (keep in mind that the portions are inside the array's objects)
+
+HINT 1: Use many different tools to solve these challenges, you can use the summary lecture to choose between them 😉
+HINT 2: Being within a range 10% above and below the recommended portion means: current > (recommended * 0.90) && current < (recommended * 1.10). Basically, the current portion should be between 90% and 110% of the recommended portion.
+
+GOOD LUCK 😀
+TEST DATA:
 
 
+const dogs = [
+  { weight: 22, currFood: 0, owners: ['Alice', 'Bob'] },
+  { weight: 8, currFood: 200, owners: ['Matilda'] },
+  { weight: 13, currFood: 275, owners: ['Sarah', 'John'] },
+  { weight: 32, currFood: 340, owners: ['Michael'] },
+];
+console.log(dogs);
+
+//1
+dogs.forEach(dog => (dog.recommendedFood = dog.weight ** 0.75 * 28));
+
+//2
+let task2 = dogs.filter(dog => dog.owners.includes('Sarah'))[0];
+let foodStatus;
+
+if (task2.currFood > 1.1 * task2.recommendedFood) {
+  foodStatus = `too much`;
+} else if (task2.currFood > 0.9 * task2.recommendedFood) {
+  foodStatus = `average`;
+} else {
+  foodStatus = `too low`;
+}
+
+console.log(`Sarah's dog is eating ${foodStatus}`);
+
+//3
+
+const ownersEatTooMuch = dogs
+.filter(dog => dog.currFood > 1.1 * dog.recommendedFood)
+  .map(dog => dog.owners)
+  .flat();
+  console.log(ownersEatTooMuch);
+
+  const ownersEatTooLittle = dogs
+  .filter(dog => dog.currFood < 0.9 * dog.recommendedFood)
+  .flatMap(dog => dog.owners);
+  console.log(ownersEatTooLittle);
   
+// 4
+
+console.log(`${ownersEatTooMuch.join(' and ')} are eating too much`);
+
+console.log(`${ownersEatTooLittle.join(' and ')} are eating too little`);
+
+//5
+console.log(dogs.some(dog => (dog.currFood = dog.recommendedFood)));
+
+//6
+console.log(
+  dogs.some(
+    dog =>
+      dog.currFood < 1.1 * dog.recommendedFood &&
+      dog.currFood > 0.9 * dog.recommendedFood
+  )
+);
+
+//7
+console.log(
+  dogs.filter(
+    dog =>
+      dog.currFood < 1.1 * dog.recommendedFood &&
+    dog.currFood > 0.9 * dog.recommendedFood
+  )
+);
+
+// 8
+const dogsSortedByRecommendedFood = dogs.sort((a,b)  => a.recommendedFood - b.recommendedFood);
+console.log(dogsSortedByRecommendedFood)
+
+*/
+
+// Sort Method
+
+// Strings
+const owners = ['Jonas', 'Martha', 'Adam', 'Zach'];
+console.log(owners.sort());
+
+//Numbers
+console.log(movements);
+
+//return <0, A,B (keep order)
+// return > 0 , B,A (switch order)
+
+// Ascending order
+movements.sort((a, b) => a - b);
+console.log(movements);
+
+//Descending order
+movements.sort((a, b) => a - b);
+console.log(movements);
