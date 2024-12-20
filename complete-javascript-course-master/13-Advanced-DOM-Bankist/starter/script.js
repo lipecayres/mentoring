@@ -33,25 +33,39 @@ document.addEventListener('keydown', function (e) {
 });
 
 // Page navigation
-/*
-document.querySelectorAll('.nav__link').forEach(function (el) {
-  el.addEventListener('click', function (e) {
-    e.preventDefault();
-
-    const id = this.getAttribute('href');
-
-    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
-  });
-});
-*/
-
-// Event Delegation
-// 1. Add event listeener to commom parent element
-// 2. Determine what element originated the event
 
 document.querySelector('.nav__links').addEventListener('click', function (e) {
   const id = e.target.getAttribute('href');
   document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+});
+
+// Tabbed Components
+
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+tabsContainer.addEventListener('click', function (e) {
+  // Get button and making sure is always catching the button.
+  const clicked = e.target.closest('button');
+
+  // Guard clause
+  if (!clicked) return;
+
+  // Removing classes from all elements
+  tabs.forEach(t => t.classList.remove('operations__tab--active'));
+
+  // Adding class to target element
+  clicked.classList.add('operations__tab--active');
+
+  // Activate Content Area
+    // Remove classes from all elements
+  const currentContent = document.querySelector(
+    `.operations__content--${clicked.dataset.tab}`
+  );
+    // Adding class to target content element 
+  tabsContent.forEach(c => c.classList.remove('operations__content--active'))
+  currentContent.classList.add('operations__content--active')
 });
 
 ////////////////////////////////////////////////////////
@@ -259,3 +273,22 @@ console.log(h1.parentElement.children);
   if (el!== h1) el.style.transform = 'scale(0.5)'
 })
 */
+
+// Page navigation
+/*
+document.querySelectorAll('.nav__link').forEach(function (el) {
+  el.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    const id = this.getAttribute('href');
+
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  });
+});
+*/
+
+// Event Delegation
+// 1. Add event listeener to commom parent element
+// 2. Determine what element originated the event
+
+// Tabbed Components
