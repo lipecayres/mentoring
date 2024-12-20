@@ -7,6 +7,8 @@ const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
 
 const openModal = function (e) {
   e.preventDefault();
@@ -30,19 +32,28 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
-// Scroll to Section 1
-const btnScrollTo = document.querySelector('.btn--scroll-to');
-const section1 = document.querySelector('#section--1');
+// Page navigation
+/*
+document.querySelectorAll('.nav__link').forEach(function (el) {
+  el.addEventListener('click', function (e) {
+    e.preventDefault();
 
-btnScrollTo.addEventListener('click', e => {
-  section1.scrollIntoView({ behavior: 'smooth' });
+    const id = this.getAttribute('href');
+
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  });
+});
+*/
+
+// Event Delegation
+// 1. Add event listeener to commom parent element
+// 2. Determine what element originated the event
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  const id = e.target.getAttribute('href');
+  document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
 });
 
-
-
-// h1.onmouseenter = (e) => {
-//  alert('onmouseenter: here')
-// }
 ////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////
