@@ -143,8 +143,6 @@ const allSections = document.querySelectorAll('.section');
 // Observer action function
 const revealSection = function (entries, observer) {
   entries.forEach(entry => {
-    console.log(entry);
-
     if (!entry.isIntersecting) return;
     entry.target.classList.remove('section--hidden');
 
@@ -163,6 +161,41 @@ allSections.forEach(function (section) {
   sectionObserver.observe(section);
   section.classList.add('section--hidden');
 });
+
+// -- Lazy loading images
+
+ // targets selector
+const imgTargets = document.querySelectorAll('img[data-src]');
+
+// observer function
+const loadImages = function (entries, observer) {
+  const [entry] = entries;
+  console.log(entry);
+
+  if (!entry.isIntersecting) return;
+  // Replace source attribute
+  entry.target.src = entry.target.dataset.src;
+
+  entry.target.addEventListener('load', () => {
+    entry.target.classList.remove('lazy-img');
+  });
+
+  observer.unobserve(entry.target); 
+};
+
+// New Obsever
+const imgObserver = new IntersectionObserver(loadImages, {
+  root: null,
+  threshold: 0.15,
+  rootMargin: '200px'
+});
+
+// creating observer for all elements
+imgTargets.forEach(img => imgObserver.observe(img));
+
+
+// -- Slider Implementation
+
 
 ////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////
