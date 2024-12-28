@@ -1,7 +1,7 @@
 'use strict';
 /* 
-const Person = function (firstName, birthYear) {
-  this.firstName = firstName;
+const Person = function (fullName, birthYear) {
+  this.fullName = fullName;
   this.birthYear = birthYear;
 
   // Never do this :
@@ -37,7 +37,7 @@ console.log(Person.prototype.isPrototypeOf(Person));
 Person.prototype.species = 'Homo Sapiens';
 console.log(jack.species, matilda.species);
 
-console.log(jack.hasOwnProperty('firstName'));
+console.log(jack.hasOwnProperty('fullName'));
 console.log(jack.hasOwnProperty('species'));
 
 console.log(jack.__proto__);
@@ -98,29 +98,51 @@ car2.brake();
 
 // class declaration
 class PersonCl {
-  constructor(firstName, birthYear) {
-    this.firstName = firstName;
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
     this.birthYear = birthYear;
   }
 
   // Methods will be to .prototype property
+  // Instance methods
   calcAge() {
     console.log(2037 - this.birthYear);
   }
 
   greet() {
-    console.log(`Hey ${this.firstName}`);
+    console.log(`Hey ${this.fullName}`);
+  }
+
+  get age() {
+    return 2037 - this.age;
+  }
+
+  // getters and setters in JS
+  // set a property that already exists
+  set fullName(name) {
+    if (name.includes(' ')) this._fullName = name;
+    else alert(`${name} is not a full name`);
+  }
+
+  get fullName() {
+    return this._fullName;
+  }
+
+  // Static Method
+  static hey() {
+    console.log('Hey there');
+    console.log(this);
   }
 }
 
-const jessica = new PersonCl('Jessica', 1996);
+const jessica = new PersonCl('Jessica Davis', 1996);
 console.log(jessica);
 jessica.calcAge();
 
 console.log(jessica.__proto__ === PersonCl.prototype);
 
 // PersonCl.prototype.greet = function () {
-//   console.log(`Hey ${this.firstName}`);
+//   console.log(`Hey ${this.fullName}`);
 // };
 
 jessica.greet();
@@ -128,3 +150,28 @@ jessica.greet();
 // 1. Classes are NOT hoisted
 // 2. Class are first-class citizes
 // 3. Classes are executed in strict mode
+
+const walter = new PersonCl('Walter White', 1992);
+console.log(walter);
+
+PersonCl.hey()
+
+// getters and setters
+
+const account = {
+  owner: 'felipe',
+  movements: [100, 45, 94, 299, 400],
+
+  get latest() {
+    return this.movements.slice(-1).pop();
+  },
+
+  set latest(mov) {
+    this.movements.push(mov);
+  },
+};
+
+console.log(account.latest);
+
+account.latest = 50;
+console.log(account.movements);
