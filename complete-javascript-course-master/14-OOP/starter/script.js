@@ -93,7 +93,7 @@ car1.brake();
 car2.accelerate();
 car2.brake();
 */
-
+/*
 // ES6 Classes
 
 // class declaration
@@ -175,3 +175,67 @@ console.log(account.latest);
 
 account.latest = 50;
 console.log(account.movements);
+*/
+
+// Object.create class
+
+const PersonProto = {
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const steven = Object.create(PersonProto);
+console.log(steven);
+steven.name = 'Steven';
+steven.birthYear = 2002;
+steven.calcAge();
+
+console.log(steven.__proto__ === PersonProto);
+
+const sarah = Object.create(PersonProto);
+sarah.init('Sarah', 1979);
+sarah.calcAge();
+
+// Challenge 2
+
+//1.
+class Car {
+  constructor(make, speed) {
+    this.make = make;
+    this.speed = speed;
+  }
+
+  accelerate() {
+    this.speed += 10;
+    console.log(`The ${this.make} car is driving at ${this.speed}km/h`);
+  }
+
+  brake() {
+    this.speed -= 5;
+    console.log(`The ${this.make} car is driving at ${this.speed}km/h`);
+  }
+
+  get speedUS() {
+    return this.speed / 1.6;
+  }
+  set speedUS(speed) {
+    return this.speed = speed * 1.6;
+  }
+}
+
+const ford = new Car('Ford', 120);
+console.log(ford.speedUS)
+ford.accelerate();
+ford.accelerate();
+ford.brake();
+
+
+ford.speedUS =50;
+console.log(ford)
+
+// 2.
