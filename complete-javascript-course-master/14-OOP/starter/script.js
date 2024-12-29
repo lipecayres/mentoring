@@ -175,7 +175,6 @@ console.log(account.latest);
 
 account.latest = 50;
 console.log(account.movements);
-*/
 
 // Object.create class
 
@@ -214,7 +213,7 @@ class Car {
     this.speed += 10;
     console.log(`The ${this.make} car is driving at ${this.speed}km/h`);
   }
-
+  
   brake() {
     this.speed -= 5;
     console.log(`The ${this.make} car is driving at ${this.speed}km/h`);
@@ -238,4 +237,32 @@ ford.brake();
 ford.speedUS =50;
 console.log(ford)
 
-// 2.
+*/
+
+const Person = function (fullName, birthYear) {
+  this.fullName = fullName;
+  this.birthYear = birthYear;
+};
+
+Person.prototype.calcAge = function () {
+  console.log(2037 - this.birthYear);
+};
+
+const Student = function (firstName, birthYear, course) {
+  Person.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+// Linking prototypes
+Student.prototype = Object.create(Person.prototype);
+
+Student.prototype.constructor = Student;
+
+Student.prototype.introduce = function () {
+  console.log(`My name ins ${this.firstName} and I study ${this.course}`);
+};
+
+const mike = new Student('Mike', 2020, 'Computer Science');
+console.log(mike);
+mike.introduce();
+mike.calcAge();
