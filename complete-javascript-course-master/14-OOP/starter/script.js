@@ -374,7 +374,6 @@ console.log(martha);
 
 martha.introduce()
 martha.calcAge()
-*/
 
 const PersonProto = {
   calcAge() {
@@ -403,3 +402,71 @@ const jay = Object.create(StudentProto);
 jay.init('Jay', 2010, "computer Science")
 jay.introduce()
 jay.calcAge()
+
+*/
+
+// Encapsulation: Private Class Fields and Methods
+
+// 1. Public Fields
+// 2. Private Fields
+// 3. Public methods
+// 4. Private methods
+// STATIC version of these 4
+
+class Account {
+  locale = navigator.language;
+  bank = 'Bankist';
+  #movements = [];
+  #pin;
+
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.#pin = pin;
+    // this.movements = [];
+    // this.locale = navigator.language;
+
+    console.log(`Thanks for opening an account, ${owner}`);
+  }
+  // Public interface (API)
+
+  getMovements() {
+    return this.#movements;
+  }
+
+  deposit(val) {
+    this.#movements.push(val);
+  }
+
+  withdraw(val) {
+    this.#movements.push(-val);
+  }
+
+  requestLoan(val) {
+    if (this.#approveLoan(val)) {
+      this.deposit(val);
+      console.log('Approved Loan');
+    }
+  }
+
+  #approveLoan() {
+    // Fake method
+    return true;
+  }
+
+  static test() {
+    console.log('TEST');
+  }
+}
+
+const acc1 = new Account('Jonas', 'EUR', 1111);
+acc1.deposit(200);
+acc1.withdraw(140);
+
+acc1.requestLoan(500);
+
+
+console.log(acc1);
+
+Account.test()
+
