@@ -267,7 +267,6 @@ const mike = new Student('Mike', 2020, 'Computer Science');
 console.log(mike);
 mike.introduce();
 mike.calcAge();
-*/
 
 // Challenge 3
 
@@ -312,3 +311,95 @@ console.log(tesla);
 tesla.brake()
 tesla.accelerate()
 
+
+// inheritance using ES6 classes
+
+// class declaration
+class PersonCl {
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
+    this.birthYear = birthYear;
+  }
+  
+  // Methods will be to .prototype property
+  // Instance methods
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  }
+
+  greet() {
+    console.log(`Hey ${this.fullName}`);
+  }
+  
+  get age() {
+    return 2037 - this.age;
+  }
+  
+  // getters and setters in JS
+  // set a property that already exists
+  set fullName(name) {
+    if (name.includes(' ')) this._fullName = name;
+    else alert(`${name} is not a full name`);
+  }
+  
+  get fullName() {
+    return this._fullName;
+  }
+
+  // Static Method
+  static hey() {
+    console.log('Hey there');
+    console.log(this);
+  }
+}
+
+class Student extends PersonCl {
+  constructor(fullName, birthYear, course) {
+    // Always needs to happen first
+    super(fullName, birthYear);
+    this.course = course;
+  }
+
+  introduce() {
+    console.log(`My name is ${this.fullName} and I stydu ${this.course}`);
+  }
+
+  calcAge() {
+    console.log(`I'm ${2037 - this.birthYear} but i feel more like ${2037 - this.birthYear +10}`);
+  }
+}
+
+const martha = new Student('Martha Jones', 2012, 'Computer Science');
+console.log(martha);
+
+martha.introduce()
+martha.calcAge()
+*/
+
+const PersonProto = {
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const steven = Object.create(PersonProto);
+
+// Inheritance
+const StudentProto = Object.create(PersonProto);
+
+StudentProto.init = function (firstName, birthYear, course) {
+  PersonProto.init.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+StudentProto.introduce = function() {
+  console.log(`My name ins ${this.firstName} and I study ${this.course}`);
+}
+const jay = Object.create(StudentProto);
+jay.init('Jay', 2010, "computer Science")
+jay.introduce()
+jay.calcAge()
