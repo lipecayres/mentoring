@@ -403,7 +403,6 @@ jay.init('Jay', 2010, "computer Science")
 jay.introduce()
 jay.calcAge()
 
-*/
 
 // Encapsulation: Private Class Fields and Methods
 
@@ -418,33 +417,33 @@ class Account {
   bank = 'Bankist';
   #movements = [];
   #pin;
-
+  
   constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
     this.#pin = pin;
     // this.movements = [];
     // this.locale = navigator.language;
-
+    
     console.log(`Thanks for opening an account, ${owner}`);
   }
   // Public interface (API)
-
+  
   getMovements() {
     return this.#movements;
     //not chainable
   }
-
+  
   deposit(val) {
     this.#movements.push(val);
     return this;
   }
-
+  
   withdraw(val) {
     this.#movements.push(-val);
     return this;
   }
-
+  
   requestLoan(val) {
     if (this.#approveLoan(val)) {
       this.deposit(val);
@@ -452,7 +451,7 @@ class Account {
     }
     return this;
   }
-
+  
   #approveLoan() {
     // Fake method
     return true;
@@ -471,12 +470,80 @@ const acc1 = new Account('Jonas', 'EUR', 1111);
 // Account.test();
 
 const movements = acc1
-  .deposit(300)
-  .withdraw(100)
-  .withdraw(50)
-  .requestLoan(25000)
-  .withdraw(4000)
-  .getMovements()
+.deposit(300)
+.withdraw(100)
+.withdraw(50)
+.requestLoan(25000)
+.withdraw(4000)
+.getMovements()
 
 console.log(movements);
 
+*/
+
+// >>> Summary Classes
+
+// Primary class
+class Person {
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
+    this.birthYear = birthYear;
+  }
+}
+
+// Parent class
+class Student extends Person {
+  // Public fields
+  university = 'University of Canada';
+
+  // Private fields
+  #studyHours = 0;
+  #course;
+
+  // Static Fields
+  static nomSubjects = 10;
+
+  // Constructor method
+  constructor(fullName, birthYear, startYear, course) {
+    // Call to parent => super class
+    super(fullName, birthYear);
+    // Instance properties
+    this.startYear = startYear;
+    this.#course = course; // redefining private field
+  }
+
+  // Public Interface (methods)
+  introduce() {
+    console.log(`I study ${this.course} at ${this.university}`);
+  }
+
+  study(h) {
+    this.#studyHours += h;
+    this.#makeCoffee();
+  }
+
+  // Private methods
+  #makeCoffee() {
+    return console.log(`Here's a coffee for you :)`);
+  }
+
+  // getter method
+  get testScore() {
+    return this._testScore;
+  }
+
+  // setter method
+  set testScore(score) {
+    this._testScore = score <= 20 ? score : 0;
+  }
+
+  static printCurriculum() {
+    console.log(`There are ${this.nomSubjects} subjects`);
+  }
+}
+
+const student = new Student('Jonas', 2000, 2037, 'Programming');
+
+student.testScore = 20
+
+console.log(student);
