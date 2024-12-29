@@ -479,7 +479,6 @@ const movements = acc1
 
 console.log(movements);
 
-*/
 
 // >>> Summary Classes
 
@@ -495,14 +494,14 @@ class Person {
 class Student extends Person {
   // Public fields
   university = 'University of Canada';
-
+  
   // Private fields
   #studyHours = 0;
   #course;
 
   // Static Fields
   static nomSubjects = 10;
-
+  
   // Constructor method
   constructor(fullName, birthYear, startYear, course) {
     // Call to parent => super class
@@ -511,27 +510,27 @@ class Student extends Person {
     this.startYear = startYear;
     this.#course = course; // redefining private field
   }
-
+  
   // Public Interface (methods)
   introduce() {
     console.log(`I study ${this.course} at ${this.university}`);
   }
-
+  
   study(h) {
     this.#studyHours += h;
     this.#makeCoffee();
   }
-
+  
   // Private methods
   #makeCoffee() {
     return console.log(`Here's a coffee for you :)`);
   }
-
+  
   // getter method
   get testScore() {
     return this._testScore;
   }
-
+  
   // setter method
   set testScore(score) {
     this._testScore = score <= 20 ? score : 0;
@@ -547,3 +546,57 @@ const student = new Student('Jonas', 2000, 2037, 'Programming');
 student.testScore = 20
 
 console.log(student);
+
+*/
+
+// Challenge 4
+
+class Car {
+  constructor(make, speed) {
+    this.make = make;
+    this.speed = speed;
+  }
+
+  accelerate() {
+    this.speed += 10;
+    console.log(`The ${this.make} car is driving at ${this.speed}km/h`);
+    return this;
+  }
+
+  brake() {
+    this.speed -= 5;
+    console.log(`The ${this.make} car is driving at ${this.speed}km/h`);
+    return this;
+  }
+}
+
+class EV extends Car {
+  #charge;
+
+  constructor(make, speed, charge) {
+    super(make, speed);
+    this.#charge = charge;
+  }
+
+  chargeBattery(chargeTo) {
+    this.#charge = chargeTo;
+    return this;
+  }
+
+  accelerate() {
+    this.speed += 20;
+    this.#charge--;
+    console.log(
+      `The ${this.make} car is driving at ${this.speed}km/h, with a charge of ${
+        this.#charge
+      }%`
+    );
+    return this;
+  }
+}
+
+const rivian = new EV('Rivian', 120, 23);
+rivian.chargeBattery(90);
+console.log(rivian);
+rivian.brake();
+rivian.accelerate().brake().accelerate().chargeBattery(95).accelerate();
