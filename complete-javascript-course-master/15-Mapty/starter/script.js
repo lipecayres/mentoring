@@ -3,15 +3,6 @@
 // prettier-ignore
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-const form = document.querySelector('.form');
-const containerWorkouts = document.querySelector('.workouts');
-const inputType = document.querySelector('.form__input--type');
-const inputDistance = document.querySelector('.form__input--distance');
-const inputDuration = document.querySelector('.form__input--duration');
-const inputCadence = document.querySelector('.form__input--cadence');
-const inputElevation = document.querySelector('.form__input--elevation');
-
-let map, mapEvent;
 
 // Workout (main) Class
 class Workout {
@@ -25,7 +16,8 @@ class Workout {
 
 // Running (child) class
 class Running extends Workout {
-  constructor(coords, distance, duration, cadence) { // coords: [lat, lng] , distance: km , duration: in min 43.646976,-79.3706496
+  constructor(coords, distance, duration, cadence) {
+    // coords: [lat, lng] , distance: km , duration: in min 43.646976,-79.3706496
     super(coords, distance, duration);
     Object.assign(this, { cadence });
     this.calcPace();
@@ -33,7 +25,7 @@ class Running extends Workout {
 
   calcPace() {
     this.pace = this.duration / this.distance;
-    return this.pace
+    return this.pace;
   }
 }
 
@@ -46,16 +38,24 @@ class Cycling extends Workout {
 
   calcSpeed() {
     // km/h --> km / min
-    this.speed = this.distance / (this.duration / 60) 
-    return this.speed
+    this.speed = this.distance / (this.duration / 60);
+    return this.speed;
   }
 }
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 // Application Architecture
 
 //////
+
+const form = document.querySelector('.form');
+const containerWorkouts = document.querySelector('.workouts');
+const inputType = document.querySelector('.form__input--type');
+const inputDistance = document.querySelector('.form__input--distance');
+const inputDuration = document.querySelector('.form__input--duration');
+const inputCadence = document.querySelector('.form__input--cadence');
+const inputElevation = document.querySelector('.form__input--elevation');
+
 
 class App {
   #map;
@@ -110,15 +110,17 @@ class App {
   _newWorkout(e) {
     e.preventDefault();
 
-    // Clear input fields
-    inputDistance.value =
-      inputDuration.value =
-      inputCadence.value =
-      inputElevation.value =
-        '';
+    // Get data from form
 
-    // Display marker
-    console.log('SUBMIT');
+    // Check if data is valid
+
+    // if valid activity running, create running object
+
+    // if valid activity cycling, create cycling object
+
+    // Add new object to workout array
+
+    // Render workout on map
 
     const { lat, lng } = this.#mapEvent.latlng;
 
@@ -135,6 +137,15 @@ class App {
       )
       .setPopupContent('Workout')
       .openPopup();
+
+    // Render workout on the list
+
+    // Hide form and clear input fields
+    inputDistance.value =
+      inputDuration.value =
+      inputCadence.value =
+      inputElevation.value =
+        '';
   }
 }
 
