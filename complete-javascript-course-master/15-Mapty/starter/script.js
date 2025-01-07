@@ -159,7 +159,7 @@ class App {
     console.log(workout);
 
     // Render workout on map
-    this.renderWorkoutMarker(workout);
+    this._renderWorkoutMarker(workout);
 
     // Render workout on the list
 
@@ -171,7 +171,7 @@ class App {
         '';
   }
 
-  renderWorkoutMarker(workout) {
+  _renderWorkoutMarker(workout) {
     L.marker(workout.coords)
       .addTo(this.#map)
       .bindPopup(
