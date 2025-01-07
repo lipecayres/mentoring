@@ -13,6 +13,50 @@ const inputElevation = document.querySelector('.form__input--elevation');
 
 let map, mapEvent;
 
+// Workout (main) Class
+class Workout {
+  date = new Date();
+  //defining id
+  id = (Date.now() + '').slice(-10);
+  constructor(coords, distance, duration) {
+    Object.assign(this, { coords, distance, duration });
+  }
+}
+
+// Running (child) class
+class Running extends Workout {
+  constructor(coords, distance, duration, cadence) { // coords: [lat, lng] , distance: km , duration: in min 43.646976,-79.3706496
+    super(coords, distance, duration);
+    Object.assign(this, { cadence });
+    this.calcPace();
+  }
+
+  calcPace() {
+    this.pace = this.duration / this.distance;
+    return this.pace
+  }
+}
+
+// Cycling (child) class
+class Cycling extends Workout {
+  constructor(coords, distance, duration, elevationGain) {
+    super(coords, distance, duration);
+    Object.assign(this, { elevationGain });
+  }
+
+  calcSpeed() {
+    // km/h --> km / min
+    this.speed = this.distance / (this.duration / 60) 
+    return this.speed
+  }
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+// Application Architecture
+
+//////
+
 class App {
   #map;
   #mapEvent;
@@ -59,10 +103,8 @@ class App {
   }
 
   _toggleElevationField() {
-    inputElevation
-    .closest('.form__row')
-    .classList.toggle('form__row--hidden');
-  inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
+    inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
+    inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
   }
 
   _newWorkout(e) {
