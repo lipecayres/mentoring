@@ -1,15 +1,19 @@
 'use strict';
 
-// prettier-ignore
-const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
 // Workout (main) Class
 class Workout {
   date = new Date();
-  //defining id
   id = (Date.now() + '').slice(-10);
+
   constructor(coords, distance, duration) {
     Object.assign(this, { coords, distance, duration });
+  }
+
+  _setDescription() {
+    // prettier-ignore
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    // prettier-ignore
+    this.description = `${type[0].toUpperCase()}${type.slice(1)} on ${months[this.date.getMonth()]} ${this.date.getDate()}`
   }
 }
 
@@ -20,6 +24,8 @@ class Running extends Workout {
     // coords: [lat, lng] , distance: km , duration: in min 43.646976,-79.3706496
     super(coords, distance, duration);
     Object.assign(this, { cadence });
+
+    this._setDescription();
     this.calcPace();
   }
 
@@ -36,6 +42,8 @@ class Cycling extends Workout {
   constructor(coords, distance, duration, elevationGain) {
     super(coords, distance, duration);
     Object.assign(this, { elevationGain });
+
+    this._setDescription();
   }
 
   calcSpeed() {
@@ -162,6 +170,7 @@ class App {
     this._renderWorkoutMarker(workout);
 
     // Render workout on the list
+    this._renderWorkout(workout);
 
     // Hide form and clear input fields
     inputDistance.value =
@@ -185,6 +194,41 @@ class App {
       )
       .setPopupContent(workout.type)
       .openPopup();
+  }
+
+  _renderWorkout(workout) {
+    let html = ` <li class="workout workout--${workout.type}" data-id="${
+      workout.id
+    }">
+          <h2 class="workout__title">${workout.description}</h2>
+          <div class="workout__details">
+            <span class="workout__icon">${
+              workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'
+            }</span>
+            <span class="workout__value">${workout.distance}</span>
+            <span class="workout__unit">km</span>
+          </div>
+          <div class="workout__details">
+            <span class="workout__icon">⏱</span>
+            <span class="workout__value">${workout.duration}</span>
+            <span class="workout__unit">min</span>
+          </div>
+`;
+
+    if (workout.type === 'running') {
+      html += ` 
+          <div class="workout__details">
+            <span class="workout__icon">⚡️</span>
+            <span class="workout__value">${workout.pace.toFixed(1)}</span>
+            <span class="workout__unit">min/km</span>
+          </div>
+          <div class="workout__details">
+            <span class="workout__icon">🦶🏼</span>
+            <span class="workout__value">${workout.cadence}</span>
+            <span class="workout__unit">spm</span>
+          </div>
+        </li> `;
+    }
   }
 }
 

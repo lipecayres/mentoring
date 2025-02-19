@@ -20,8 +20,9 @@ body {
   align-items: center;
   margin: 0;
   background: url(https://i.pinimg.com/originals/69/68/1e/69681ef4639fa37d34c05f824a597cb3.jpg)
-    no-repeat fixed;
-  background-position: left 80%;
+    no-repeat fixed ;
+  background-position: left 70%;
+  background-size: cover;
 }
 
 /*Container*/
